@@ -2,12 +2,16 @@ from flask import Flask, render_template, request
 import pickle
 import pandas as pd
 import numpy as np
+import zipfile
 
+books_zip_file= "books.zip"
 
-
+with zipfile.Zipfile(books_zip_file,'r') as zip_ref:
+    with zip_ref.open('books.pkl') :
+        books= pd.read_pickle('books.pkl','infer')
+        
 popular_df = pd.read_pickle('popular.pkl','infer')
 pt = pd.read_pickle('pt.pkl','infer')
-books= pd.read_pickle('books.pkl','infer')
 similarity_scores = pd.read_pickle('similarity_scores.pkl','infer')
 
 app = Flask(__name__)
